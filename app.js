@@ -9,7 +9,7 @@ const orderRoutes = require('./api/routes/orders');
 
 mongoose.connect('mongodb+srv://shop-test:testingpassword@test-shop.lcooo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
     .then( () =>
-        console.log('Did not break!')
+        console.log('Connected to MongoDB..')
     )
     .catch(error => {
         console.log(error);
