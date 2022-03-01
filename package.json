@@ -1,0 +1,25 @@
+{
+  "name": "npm_playground",
+  "version": "1.0.0",
+  "description": "Intro to learning Node.js and NPM.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "npm",
+    "node.js"
+  ],
+  "author": "Glen Cathey",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.4",
+    "morgan": "^1.10.0"
+  }
+}
