@@ -6,13 +6,22 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
     Product.find({})
+    .select('-__v')
     .exec()
     .then( result => {
         res.status(200).json( {
-            meta_info: {
-                count: result.length,
-            },
-            products: result
+            count: result.length,
+            products: result.map( doc => {
+                return {
+                    name: doc.name,
+                    price: doc.price,
+                    _id: doc._id,
+                    request: {
+                        type: 'GET',
+                        url: 'http://localhost:3000/products/' + doc._id
+                    }
+                }
+            })
         })
     })
     .catch(err => {
@@ -27,13 +36,20 @@ router.get('/', (req, res, next) => {
 router.get('/:productId', (req, res, next) => {
     const id = req.params.productId;
     Product.findById(id)
+        .select('-__v')
         .exec()
         .then( returned_product => {
             console.log(returned_product);
             if (returned_product) {
-                res.status(200).json(returned_product);
+                res.status(200).json({
+                    product: returned_product,
+                    request: {
+                        type: 'GET',
+                        url: "http://localhost:3000/products"
+                    }
+                });
             } else {
-                res.status(404).json( {message: "Entry fot given ID not found."});
+                res.status(404).json( {message: "Entry for given ID not found."});
             }
         })
         .catch( err => {
@@ -56,7 +72,15 @@ router.post('/', (req, res, next) => {
         .catch( err => console.log(err));
     res.status(201).json({
         msg: "Handling POST request to /products with shown attributes!",
-        product: product
+        createdProduct: {
+            name: result.name,
+            price: result.price,
+            _id: result._id,
+            request: {
+                type: 'GET',
+                url: "http://localhost:3000/products/" + result._id
+            }
+        }
     });
 });
 
