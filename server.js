@@ -10,5 +10,5 @@ try {
 
     server.listen(port);
 } catch( error ) {
-    fs.writeFile(__dirname + '/error_file.txt', error);
+    fs.appendFile(__dirname + '/error_file.txt', error);
 }
