@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const Order = require('../models/order.js');
+const Product = require('../models/product.js')
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
@@ -35,6 +36,11 @@ router.get('/:orderId', (req, res, next) => {
         .exec()
         .then(result => {
             console.log(result);
+            if (!result) {
+                return res.status(404).json({
+                    message: "Order ID not found!"
+                })
+            }
             res.status(200).json(result);
         })
         .catch(err => {
@@ -46,13 +52,20 @@ router.get('/:orderId', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-    const order = new Order({
-        _id: new mongoose.Types.ObjectId(),
-        product_id: req.body.productId,
-        quantity: req.body.quantity
-    })
-    order
-        .save()
+    Product.findById(req.body.productId)
+        .then(product => {
+            if (!product) {
+                return res.status(404).json({
+                    message: "Product not found in product database!"
+                });
+            }
+            const order = new Order({
+                _id: new mongoose.Types.ObjectId(),
+                product_id: req.body.productId,
+                quantity: req.body.quantity
+            });
+            return order.save();
+        })
         .then(result => {
             console.log(result);
             res.status(201).json(result);
@@ -75,7 +88,7 @@ router.patch('/:orderId', (req, res, next) => {
 router.delete('/:orderId', (req, res, next) => {
     Order.findByIdAndDelete(req.params.orderId)
         .exec()
-        .then(result => {
+        .then(result => { 
             console.log(result);
             res.status(200).json({
                 message: "Successfully deleted order!",
