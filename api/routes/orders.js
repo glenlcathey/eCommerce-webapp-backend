@@ -7,13 +7,14 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
     Order.find({})
         .select('-__v')
+        .populate('product', '-__v -price')
         .exec()
         .then(results => {
             console.log(results);
             res.status(200).json(results.map(order => {
                 return {
                     _id: order._id,
-                    product_id: order.product_id,
+                    product: order.product,
                     quantity: order.quantity,
                     req: {
                         type: 'GET',
@@ -33,6 +34,7 @@ router.get('/', (req, res, next) => {
 router.get('/:orderId', (req, res, next) => {
     Order.findById(req.params.orderId)
         .select('-__v')
+        .populate('product', '-__v -price')
         .exec()
         .then(result => {
             console.log(result);
@@ -61,7 +63,7 @@ router.post('/', (req, res, next) => {
             }
             const order = new Order({
                 _id: new mongoose.Types.ObjectId(),
-                product_id: req.body.productId,
+                product: req.body.productId,
                 quantity: req.body.quantity
             });
             return order.save();
