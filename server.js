@@ -1,9 +1,9 @@
-try {
-    const http = require('http');
-    const fs = require('fs');
-    const { getSystemErrorMap } = require('util');
-    const app = require('./app.js');
+const http = require('http');
+const fs = require('fs');
+const { getSystemErrorMap } = require('util');
+const app = require('./app.js');
 
+try {
     const port = process.env.port || 3000;
 
     const server = http.createServer(app);
