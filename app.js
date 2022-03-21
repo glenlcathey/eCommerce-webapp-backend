@@ -16,6 +16,7 @@ mongoose.connect('mongodb+srv://shop-test:testingpassword@test-shop.lcooo.mongod
     });
 
 app.use(morgan("dev"));
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
