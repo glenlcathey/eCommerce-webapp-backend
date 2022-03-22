@@ -1,5 +1,4 @@
 require('dotenv').config();
-console.log(process.env);
 const http = require('http');
 const fs = require('fs');
 const { getSystemErrorMap } = require('util');
