@@ -1,3 +1,4 @@
+require('dotenv').config();             // Loads env variables for MongoDB connection
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
@@ -8,7 +9,7 @@ const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 const userRoutes = require('./api/routes/users');
 
-mongoose.connect('mongodb+srv://shop-test:testingpassword@test-shop.lcooo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGODB)
     .then( () =>
         console.log('Connected to MongoDB..')
     )
