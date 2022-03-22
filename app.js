@@ -1,4 +1,3 @@
-require('dotenv').config();             // Loads env variables for MongoDB connection
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
@@ -8,6 +7,7 @@ const mongoose = require('mongoose');
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 const userRoutes = require('./api/routes/users');
+
 
 mongoose.connect(process.env.MONGODB)
     .then( () =>

@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();             // Loads environment variable for signing JWT's
 
 const User = require('../models/user.js');
 
