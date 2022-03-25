@@ -17,7 +17,7 @@ exports.products_get_all = (req, res, next) => {
                     productImage: doc.productImage,
                     request: {
                         type: 'GET',
-                        url: 'http://localhost:3000/products/' + doc._id
+                        url: 'http://localhost:5000/products/' + doc._id
                     }
                 }
             })
@@ -44,7 +44,7 @@ exports.products_get_one = (req, res, next) => {
                     product: returned_product,
                     request: {
                         type: 'GET',
-                        url: "http://localhost:3000/products"
+                        url: "http://localhost:5000/products"
                     }
                 });
             } else {
@@ -77,7 +77,7 @@ exports.products_create_product = (req, res, next) => {
                     _id: result._id,
                     request: {
                         type: 'GET',
-                        url: "http://localhost:3000/products/" + result._id
+                        url: "http://localhost:5000/products/" + result._id
                     }
                 }
             });

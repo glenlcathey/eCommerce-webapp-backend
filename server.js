@@ -5,7 +5,7 @@ const { getSystemErrorMap } = require('util');
 const app = require('./app.js');
 
 try {
-    const port = process.env.port || 3000;
+    const port = process.env.port || 5000;
 
     const server = http.createServer(app);
 
