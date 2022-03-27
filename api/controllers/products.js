@@ -35,7 +35,7 @@ exports.products_get_all = (req, res, next) => {
 exports.products_get_one = (req, res, next) => {
     const id = req.params.productId;
     Product.findById(id)
-        .select('-__v')
+        .select('-__v -productImage')
         .exec()
         .then( returned_product => {
             console.log(returned_product);
@@ -63,12 +63,12 @@ exports.products_create_product = (req, res, next) => {
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         price: req.body.price,
-        productImage: req.file.path
+        productImage: req.file.buffer
     });
     product
         .save()
         .then( result => {
-            console.log(result);
+            console.log("Created product \'" + result.name + "\' with ID \'" + result._id + "\'...");
             res.status(201).json({
                 msg: "Handling POST request to /products with shown attributes!",
                 createdProduct: {
@@ -89,7 +89,7 @@ exports.products_update_product = (req, res, next) => {
     const id = req.params.productId;
     const updateOps = {};
     for (const ops of req.body) {
-        updateOps[ops.propName] = ops.value;
+        updateOps[ops.propName] = ops.value;    // Currently isn't possible to update product image
     }
     console.log(updateOps);
     Product.updateOne({ _id: id }, updateOps )
