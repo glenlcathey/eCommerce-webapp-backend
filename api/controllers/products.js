@@ -35,7 +35,7 @@ exports.products_get_all = (req, res, next) => {
 exports.products_get_one = (req, res, next) => {
     const id = req.params.productId;
     Product.findById(id)
-        .select('-__v -productImage')
+        .select('-__v')
         .exec()
         .then( returned_product => {
             console.log(returned_product);
